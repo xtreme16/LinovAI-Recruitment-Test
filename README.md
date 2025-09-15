@@ -58,7 +58,7 @@ performance_reviews.csv: id_review,id_karyawan,id_reviewer,tanggal_review,skor_p
 ### Kompilasi & Menjalankan
 ```bash
 javac -d bin src/com/hr/agent/*.java
-java -cp src com.hr.agent.HRAgentApp
+java -cp bin com.hr.agent.HRAgentApp
 ```
 
 ### Contoh Interaksi
