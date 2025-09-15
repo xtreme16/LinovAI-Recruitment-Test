@@ -69,18 +69,18 @@ Saya dapat membantu Anda dengan:
 • Perintah HR (ajukan cuti, jadwalkan review, lapor pengeluaran)
 Ketik 'keluar' untuk mengakhiri.
 
-Anda: siapa manajer rina?
+Input: siapa manajer rina?
 HR Agent: Manajer Rina adalah Santi Putri.
 
-Anda: sisa cuti budi berapa?
+Input: sisa cuti budi berapa?
 HR Agent: Sisa cuti Budi:
 - Tahunan: 12 hari
 - Sakit: 7 hari
 
-Anda: saya mau ajukan cuti sakit dari 1-5 januari
+Input: saya mau ajukan cuti sakit dari 1-5 januari
 HR Agent: KONFIRMASI: Pengajuan cuti untuk Budi (jenis: Sakit) dari tanggal 1 Januari 2024 hingga 5 Januari 2024 telah dicatat.
 
-Anda: keluar
+Input: keluar
 HR Agent: Terima kasih, sampai jumpa!
 ```
 
