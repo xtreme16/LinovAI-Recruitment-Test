@@ -1,0 +1,18 @@
+id_request,id_karyawan,tipe_cuti,tanggal_mulai,tanggal_selesai,status_request
+LR001,102,Tahunan,2025-08-18,2025-08-20,Disetujui
+LR002,109,Sakit,2025-08-26,2025-08-26,Disetujui
+LR003,106,Tahunan,2025-09-15,2025-09-19,Menunggu Persetujuan
+LR004,101,Tahunan,2025-07-01,2025-07-05,Ditolak
+LR005,112,Cuti Melahirkan,2025-08-01,2025-10-31,Disetujui
+LR006,104,Tahunan,2025-09-02,2025-09-03,Menunggu Persetujuan
+LR007,102,Tahunan,20 September 2025,25 September 2025,Menunggu Persetujuan
+LR008,102,Tahunan,2025-10-25,2025-10-30,Menunggu Persetujuan
+LR009,102,Tahunan,2025-10-25,2025-10-30,Menunggu Persetujuan
+LR009,102,Tahunan,2025-10-25,2025-10-30,Menunggu Persetujuan
+LR010,102,Tahunan,2025-10-25,2025-10-30,Menunggu Persetujuan
+LR011,102,Tahunan,2025-10-25,2025-10-30,Menunggu Persetujuan
+LR012,102,Tahunan,2025-12-15,2025-12-17,Menunggu Persetujuan
+LR013,102,Tahunan,2025-12-15,2025-12-17,Menunggu Persetujuan
+LR014,102,Tahunan,2025-12-15,2025-12-17,Menunggu Persetujuan
+LR015,102,Tahunan,2025-12-15,2025-12-17,Menunggu Persetujuan
+LR016,101,Tahunan,2025-09-15,2025-09-16,Menunggu Persetujuan
