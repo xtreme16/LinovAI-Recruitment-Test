@@ -77,8 +77,7 @@ public class HRAgentApp {
 
     private static boolean isQuestion(String input) {
         String lowerInput = input.toLowerCase();
-        return QUESTION_PATTERNS.matcher(lowerInput).find() || 
-               lowerInput.endsWith("?");
+        return QUESTION_PATTERNS.matcher(lowerInput).find();
     }
     
     private static boolean isCommand(String input) {
@@ -310,6 +309,7 @@ public class HRAgentApp {
     private static String generateNewRequestsId(Path filePath) throws IOException {
         try{
             List<String> lines = Files.readAllLines(filePath);
+            if (lines.size() <= 1) return "LR001"; // kosong selain header
             String lastLine = lines.get(lines.size() - 1);
             String lastRequestId = lastLine.split(",")[0];
             int nextId = Integer.parseInt(lastRequestId.substring(2)) + 1;
@@ -451,7 +451,7 @@ public class HRAgentApp {
                 String[] cols = line.split(",");
                 if (cols.length >= 8) {
                     String nama = cols[1];
-                    // Store in map for quick lookup
+                    // Store data ke map dengan key nama
                     employeeData.put(nama.toLowerCase(), line);
                 }
             }
@@ -475,7 +475,7 @@ public class HRAgentApp {
                     String tipeCuti = cols[1];
                     int sisaHari = Integer.parseInt(cols[2]);
                     
-                    // Find employee name by ID
+                    // Cari nama karyawan berdasarkan id_karyawan
                     String employeeName = getEmployeeNameById(idKaryawan);
                     if (employeeName != null) {
                         leaveBalances.computeIfAbsent(employeeName.toLowerCase(), k -> new HashMap<>())
@@ -677,8 +677,7 @@ public class HRAgentApp {
         LocalDate[] dates = new LocalDate[2];
         String lowerInput = input.toLowerCase();
         
-        // Try to extract date range patterns
-        // Pattern: "dari 1-5 januari" or "1 sampai 5 januari"
+        // Pattern: "dari 1-5 januari" atau "1 sampai 5 januari"
         Pattern dateRangePattern = Pattern.compile("(\\d{1,2})\\s*(?:-|sampai|hingga|to)\\s*(\\d{1,2})\\s+(\\w+)");
         java.util.regex.Matcher matcher = dateRangePattern.matcher(lowerInput);
         
@@ -688,22 +687,21 @@ public class HRAgentApp {
             String monthName = matcher.group(3);
             
             int month = parseMonthName(monthName);
-            int year = LocalDate.now().getYear(); // default to current year
+            int year = LocalDate.now().getYear(); // default tahun sekarang
             
             try {
                 dates[0] = LocalDate.of(year, month, startDay);
                 dates[1] = LocalDate.of(year, month, endDay);
                 return dates;
             } catch (Exception e) {
-                // Invalid date, try single date
+                // Invalid date
             }
         }
         
-        // Try single date pattern
         LocalDate singleDate = extractSingleDate(input);
         if (singleDate != null) {
             dates[0] = singleDate;
-            dates[1] = singleDate.plusDays(1); // default 1 day
+            dates[1] = singleDate.plusDays(1); // default satu hari
             return dates;
         }
         
@@ -718,13 +716,13 @@ public class HRAgentApp {
             return dates;
         }
 
-        return dates; // both null
+        return dates;
     }
     
     private static LocalDate extractSingleDate(String input) {
         String lowerInput = input.toLowerCase();
         
-        // Pattern: "1 januari" or "15 agustus"
+        // Pattern: "1 januari" atau "15 agustus"
         Pattern singleDatePattern = Pattern.compile("(\\d{1,2})\\s+(\\w+)");
         java.util.regex.Matcher matcher = singleDatePattern.matcher(lowerInput);
         
@@ -733,7 +731,7 @@ public class HRAgentApp {
             String monthName = matcher.group(2);
             
             int month = parseMonthName(monthName);
-            int year = LocalDate.now().getYear(); // default to current year
+            int year = LocalDate.now().getYear(); // default tahun sekarang
             
             try {
                 return LocalDate.of(year, month, day);
@@ -755,7 +753,7 @@ public class HRAgentApp {
             }
         }
         
-        // Try English months
+        // Bulan dalam bahasa Inggris
         String[] englishMonths = {"january", "february", "march", "april", "may", "june",
                                  "july", "august", "september", "october", "november", "december"};
         
@@ -765,13 +763,13 @@ public class HRAgentApp {
             }
         }
         
-        return LocalDate.now().getMonthValue(); // default to current month
+        return LocalDate.now().getMonthValue(); // default bulan sekarang
     }
     
     private static String extractReviewerName(String input) {
         String lowerInput = input.toLowerCase();
         
-        // Look for "dengan" or "by" patterns
+        // cari pola "dengan [nama]" atau "by [nama]" atau "oleh [nama]"
         Pattern reviewerPattern = Pattern.compile("(?:dengan|by|oleh)\\s+(\\w+\\s+\\w+)");
         java.util.regex.Matcher matcher = reviewerPattern.matcher(lowerInput);
         
@@ -806,7 +804,7 @@ public class HRAgentApp {
     }
     
     private static double extractAmount(String input) {
-        // Look for number patterns with "rp", "ribu", "juta", etc.
+        // Cari pola angka dengan atau tanpa "Rp", koma/desimal, kata ribu/juta/k/m
         Pattern amountPattern = Pattern.compile("(?:rp\\s*)?(\\d+(?:[.,]\\d+)?)\\s*(?:ribu|juta|k|m)?", Pattern.CASE_INSENSITIVE);
         java.util.regex.Matcher matcher = amountPattern.matcher(input);
         
@@ -814,7 +812,7 @@ public class HRAgentApp {
             try {
                 double amount = Double.parseDouble(matcher.group(1).replace(",", "."));
                 
-                // Check for multipliers
+                // Cek untuk "ribu", "juta", "k", "m"
                 String fullMatch = matcher.group(0).toLowerCase();
                 if (fullMatch.contains("juta") || fullMatch.contains("m")) {
                     amount *= 1000000;
